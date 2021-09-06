@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html dir="ltr">
 
@@ -15,7 +14,7 @@
     <!-- Custom CSS -->
     <link href="dist/css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="dist/src/sweetalert.css">
-    
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,7 +30,7 @@
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
         <!-- ============================================================== -->
-   <!--      <div class="preloader">
+        <!--      <div class="preloader">
             <div class="lds-ripple">
                 <div class="lds-pos"></div>
                 <div class="lds-pos"></div>
@@ -43,18 +42,17 @@
         <!-- ============================================================== -->
         <!-- Login box.scss -->
         <!-- ============================================================== -->
-        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
-            style="background:url(assets/images/big/auth-bg.jpg) no-repeat center center;">
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative" style="background:url(assets/images/big/auth-bg.jpg) no-repeat center center;">
             <div class="auth-box row">
                 <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url(assets/images/big/3.jpg);">
                 </div>
                 <div class="col-lg-5 col-md-7 bg-white">
                     <div class="p-3">
                         <div class="text-center">
-                            
+
                         </div>
                         <h2 class="mt-3 text-center">Log In</h2>
-                       
+
                         <form method="POST" class="mt-4">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -73,28 +71,27 @@
                                     <button type="submit" class="btn btn-block btn-dark" name="login">Log In</button>
                                 </div>
                                 <div class="col-lg-12 text-center mt-5">
-                                    
+
                                 </div>
                             </div>
                         </form>
 
                         <?php
-session_start();
-include "koneksi.php";
+                        session_start();
+                        include "koneksi.php";
 
-if (isset($_POST["login"]))
-{
-    $email=$_POST["email"];
-    $password=$_POST["password"];
+                        if (isset($_POST["login"])) {
+                            $email = $_POST["email"];
+                            $password = $_POST["password"];
 
-   $query = $koneksi->query("SELECT * FROM tbl_user where email='$email' and password='$password'");
-   //print_r($query);
-   $cek=$query->num_rows;
-   if ($cek==1){
-    //echo "ada nih yang cocok";
-    $akun=$query->fetch_assoc();
-    $_SESSION["akun"]=$akun;
-    echo "<script type='text/javascript'>
+                            $query = $koneksi->query("SELECT * FROM tbl_user where email='$email' and password='$password'");
+                            //print_r($query);
+                            $cek = $query->num_rows;
+                            if ($cek == 1) {
+                                //echo "ada nih yang cocok";
+                                $akun = $query->fetch_assoc();
+                                $_SESSION["akun"] = $akun;
+                                echo "<script type='text/javascript'>
     setTimeout(function () {
         swal({
             title: 'Good job!',
@@ -110,10 +107,9 @@ if (isset($_POST["login"]))
 
     </script>";
 
-    echo "<script>location='views/home.php'</script>";
-
-   } else {
-   echo "<script type='text/javascript'>
+                                echo "<script>location='views/home.php'</script>";
+                            } else {
+                                echo "<script type='text/javascript'>
     setTimeout(function () {
         Swal.fire({
             title: 'Good job!',
@@ -128,14 +124,12 @@ if (isset($_POST["login"]))
     } ,2000);
 
     </script>";
-    // echo "<script>alert('gagal login')</script>";
-    echo "<script>location='index.php'</script>";
+                                // echo "<script>alert('gagal login')</script>";
+                                echo "<script>location='index.php'</script>";
+                            }
+                        }
 
-   }
-
-}
-
-?>
+                        ?>
                     </div>
                 </div>
             </div>
@@ -155,7 +149,7 @@ if (isset($_POST["login"]))
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
-<!--     <script>
+    <!--     <script>
         $(".preloader ").fadeOut();
     </script> -->
 </body>

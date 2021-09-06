@@ -30,15 +30,15 @@ include "../koneksi.php";
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <label class="text-dark" for="kd_barang">Nama Pelanggan</label>
-                                                        <input class="form-control" id="kd_barang" type="text" name="kd_barang" placeholder="Kode Barang">
+                                                        <input class="form-control" id="kd_barang" type="text" name="kd_barang" placeholder="">
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="text-dark" for="kd_barang">Alamat</label>
-                                                        <input class="form-control" id="kd_barang" type="text" name="kd_barang" placeholder="Kode Barang">
+                                                        <input class="form-control" id="kd_barang" type="text" name="kd_barang" placeholder="">
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="text-dark" for="kd_barang">No.Telp</label>
-                                                        <input class="form-control" id="kd_barang" type="text" name="kd_barang" placeholder="Kode Barang">
+                                                        <input class="form-control" id="kd_barang" type="text" name="kd_barang" placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
