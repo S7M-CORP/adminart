@@ -28,6 +28,9 @@
 <!--Custom JavaScript -->
 <script src="../dist/js/custom.min.js"></script>
 <script src="../assets/select2/js/select2.min.js"></script>
+<!--This page plugins -->
+<script src="../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../dist/js/pages/datatable/datatable-basic.init.js"></script>
 </body>
 
 </html>

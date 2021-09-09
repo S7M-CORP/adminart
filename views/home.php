@@ -45,10 +45,14 @@ include "../koneksi.php";
                     <div class="d-flex d-lg-flex d-md-block align-items-center">
                         <div>
                             <div class="d-inline-flex align-items-center">
-                                <h2 class="text-dark mb-1 font-weight-medium">236</h2>
-                                <span class="badge bg-primary font-12 text-white font-weight-medium badge-pill ml-2 d-lg-block d-md-none">+18.33%</span>
+                                <h2 class="text-dark mb-1 font-weight-medium">
+                                    <?php
+                                    $sql = $koneksi->query("select * from tbl_pelanggan");
+                                    echo $sql->num_rows;
+                                    ?>
+                                </h2>
                             </div>
-                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">New Clients</h6>
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Total Pelanggan</h6>
                         </div>
                         <div class="ml-auto mt-md-3 mt-lg-0">
                             <span class="opacity-7 text-muted"><i data-feather="user-plus"></i></span>
@@ -60,9 +64,31 @@ include "../koneksi.php";
                 <div class="card-body">
                     <div class="d-flex d-lg-flex d-md-block align-items-center">
                         <div>
-                            <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><sup class="set-doller">Rp. </sup>180,306</h2>
-                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Earnings of Month
-                            </h6>
+                            <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><sup class="set-doller">Rp. </sup>
+                                <?php
+                                $hari_ini = date("Y-m-d");
+                                $tgl_awal = date('Y-m-01', strtotime($hari_ini));
+                                $tgl_akhir = date('Y-m-t', strtotime($hari_ini));
+
+                                $sql = $koneksi->query("SELECT sum(b.harga) as penjualan,
+                                                               sum(b.qty) as jumlah,
+                                                               sum(c.harga_beli) as pembelian
+                                                        FROM
+                                                            tbl_transaksi a
+                                                            LEFT JOIN tbl_transaksi_detail b ON a.kd_transaksi = b.kd_transaksi 
+                                                            LEFT JOIN tbl_barang c on b.id_barang = c.id_barang
+                                                        WHERE
+                                                            a.tgl_transaksi BETWEEN '$tgl_awal' AND '$tgl_akhir'");
+                                $data = $sql->fetch_assoc();
+                                $pembelian  = $data['pembelian'];
+                                $jumlah     = $data['jumlah'];
+                                $penjualan  = $data['penjualan'];
+
+                                $penghasilan = ($penjualan * $jumlah) - ($pembelian * $jumlah);
+                                echo number_format($penghasilan);
+                                ?>
+                            </h2>
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Penghasilan Bulanan </h6>
                         </div>
                         <div class="ml-auto mt-md-3 mt-lg-0">
                             <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
@@ -75,8 +101,12 @@ include "../koneksi.php";
                     <div class="d-flex d-lg-flex d-md-block align-items-center">
                         <div>
                             <div class="d-inline-flex align-items-center">
-                                <h2 class="text-dark mb-1 font-weight-medium">1538</h2>
-                                <span class="badge bg-danger font-12 text-white font-weight-medium badge-pill ml-2 d-md-none d-lg-block">-18.33%</span>
+                                <h2 class="text-dark mb-1 font-weight-medium">
+                                    <?php
+                                    $sql = $koneksi->query("select * from tbl_supplier");
+                                    echo $sql->num_rows;
+                                    ?>
+                                </h2>
                             </div>
                             <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Supplier</h6>
                         </div>
@@ -90,7 +120,12 @@ include "../koneksi.php";
                 <div class="card-body">
                     <div class="d-flex d-lg-flex d-md-block align-items-center">
                         <div>
-                            <h2 class="text-dark mb-1 font-weight-medium">864</h2>
+                            <h2 class="text-dark mb-1 font-weight-medium">
+                                <?php
+                                $sql = $koneksi->query("select * from tbl_barang");
+                                echo $sql->num_rows;
+                                ?>
+                            </h2>
                             <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Jumlah Barang</h6>
                         </div>
                         <div class="ml-auto mt-md-3 mt-lg-0">
@@ -177,8 +212,8 @@ include "../koneksi.php";
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table">
-                                    <thead class="thead-light">
+                                <table id="zero_config" class="table">
+                                    <thead>
                                         <tr>
 
                                             <th scope="col">No</th>
@@ -195,7 +230,8 @@ include "../koneksi.php";
                                     </thead>
                                     <tbody>
                                         <?php $no = 1;
-                                        $query = $koneksi->query("select * from tbl_transaksi order by kd_transaksi desc");
+                                        $hari_ini = date('Y-m-d');
+                                        $query = $koneksi->query("select * from tbl_transaksi where tgl_transaksi='$hari_ini' order by kd_transaksi desc");
 
                                         while ($data = $query->fetch_assoc()) { ?>
 

@@ -27,9 +27,16 @@ if (isset($_POST['tambahbrg'])) {
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Barang</h4>
-                <br>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah Barang</button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="card-title">Data Barang</h4>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Tambah Barang</button>
+                    </div>
+                </div>
+
+
 
                 <!-- sample modal content -->
                 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -89,67 +96,68 @@ if (isset($_POST['tambahbrg'])) {
                         </form>
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-            </div>
 
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Kode Barang</th>
-                            <th scope="col">Nama Barang</th>
-                            <th scope="col">Supplier</th>
-                            <th scope="col">Satuan</th>
-                            <th scope="col">Harga Beli</th>
-                            <th scope="col">Harga Jual</th>
-                            <th scope="col">Stok</th>
-                            <th scope="col">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1;
-                        $query = $koneksi->query("select * from tbl_barang a join tbl_supplier b on a.id_supplier=b.id_supplier");
-
-                        while ($data = $query->fetch_assoc()) {
-
-                            $id_barang = $data['id_barang'];
-
-
-                            // echo "<pre>";
-                            // print_r($data);
-                            // echo "<pre>";
-                        ?>
-
+                <div class="table-responsive mt-4">
+                    <table id="zero_config" class="table">
+                        <thead class="thead-light">
                             <tr>
-                                <th scope="row"><?php echo $no ?></th>
-                                <td><?php echo $data['kd_barang'] ?></td>
-                                <td><?php echo $data['nama_barang'] ?></td>
-                                <td><?php echo $data['nama_supplier'] ?></td>
-                                <td><?php echo $data['satuan'] ?></td>
-                                <td>Rp. <?php echo number_format($data['harga_beli']) ?></td>
-                                <td>Rp. <?php echo number_format($data['harga_jual']) ?></td>
-                                <td><?php echo $data['stok'] ?></td>
-                                <td>
-                                    <div class="dropdown sub-dropdown">
-                                        <button class="btn btn-link text-muted dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
-                                            <a class="dropdown-item" href="edit_barang.php?id=<?= $id_barang ?>">Edit</a>
-                                            <a class="dropdown-item" onclick="return confirm('yakin akan menghapus data ini ?')" href="hapus_barang.php?id=<?= $id_barang ?>">Hapus</a>
-                                        </div>
-                                    </div>
-                                </td>
+                                <th scope="col">No</th>
+                                <th scope="col">Kode Barang</th>
+                                <th scope="col">Nama Barang</th>
+                                <th scope="col">Supplier</th>
+                                <th scope="col">Satuan</th>
+                                <th scope="col">Harga Beli</th>
+                                <th scope="col">Harga Jual</th>
+                                <th scope="col">Stok</th>
+                                <th scope="col">Aksi</th>
                             </tr>
-                        <?php $no++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1;
+                            $query = $koneksi->query("select * from tbl_barang a join tbl_supplier b on a.id_supplier=b.id_supplier");
+
+                            while ($data = $query->fetch_assoc()) {
+                                $id_barang = $data['id_barang'];
+                                if ($data['stok'] <= 0) {
+                                    $color = 'class="bg-danger text-white"';
+                                } else if ($data['stok'] <= 5) {
+                                    $color = 'class="bg-warning text-white"';
+                                } else if ($data['stok'] >= 5) {
+                                    $color = '';
+                                }
+                            ?>
+
+                                <tr <?= $color ?>>
+                                    <th scope="row"><?php echo $no ?></th>
+                                    <td><?php echo $data['kd_barang'] ?></td>
+                                    <td><?php echo $data['nama_barang'] ?></td>
+                                    <td><?php echo $data['nama_supplier'] ?></td>
+                                    <td><?php echo $data['satuan'] ?></td>
+                                    <td>Rp. <?php echo number_format($data['harga_beli']) ?></td>
+                                    <td>Rp. <?php echo number_format($data['harga_jual']) ?></td>
+                                    <td><?php echo $data['stok'] ?></td>
+                                    <td>
+                                        <div class="dropdown sub-dropdown">
+                                            <button class="btn btn-link text-muted dropdown-toggle" type="button" id="dd1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i data-feather="more-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
+                                                <a class="dropdown-item" href="edit_barang.php?id=<?= $id_barang ?>">Edit</a>
+                                                <a class="dropdown-item" onclick="return confirm('yakin akan menghapus data ini ?')" href="hapus_barang.php?id=<?= $id_barang ?>">Hapus</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php $no++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- *************************************************************** -->
+                <!-- End Top Leader Table -->
+                <!-- *************************************************************** -->
             </div>
-            <!-- *************************************************************** -->
-            <!-- End Top Leader Table -->
-            <!-- *************************************************************** -->
         </div>
         <!-- ============================================================== -->
         <!-- End Container fluid  -->
