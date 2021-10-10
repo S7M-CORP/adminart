@@ -46,7 +46,10 @@ if (isset($_POST['simpan'])) {
                                     <option value="">-- Pilih --</option>
                                     <?php $sql = $koneksi->query("select * from tbl_supplier");
                                     while ($supp = $sql->fetch_assoc()) {
-                                        echo '<option value="' . $supp['id_supplier'] . '">' . $supp['nama_supplier'] . " | " . $supp['deskripsi'] . '</option>';
+                                        if ($data['id_supplier'] == $supp['id_supplier']) {
+                                            $seleced = "selected";
+                                        }
+                                        echo '<option value="' . $supp['id_supplier'] . '"' . $seleced . '>' . $supp['nama_supplier'] . " | " . $supp['deskripsi'] . '</option>';
                                     }
                                     ?>
                                 </select>

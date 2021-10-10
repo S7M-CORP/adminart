@@ -231,7 +231,7 @@ include "../koneksi.php";
                                     <tbody>
                                         <?php $no = 1;
                                         $hari_ini = date('Y-m-d');
-                                        $query = $koneksi->query("select * from tbl_transaksi where tgl_transaksi='$hari_ini' order by kd_transaksi desc");
+                                        $query = $koneksi->query("select * from tbl_transaksi where date(tgl_transaksi)='$hari_ini' order by kd_transaksi desc");
 
                                         while ($data = $query->fetch_assoc()) { ?>
 

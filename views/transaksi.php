@@ -28,7 +28,7 @@ if (isset($_POST['simpan'])) {
 				$total_harga = $perbarang['harga_jual'] * $jumlah;
 
 				$koneksi->query("INSERT INTO tbl_transaksi_detail (kd_transaksi, id_barang, harga, qty, total_harga)
-			VALUES ('$kd_transaksi','$id_barang','$harga','$jumlah','$total_harga')");
+			                     VALUES ('$kd_transaksi','$id_barang','$harga','$jumlah','$total_harga')");
 
 				//syntax update stok barang
 				$koneksi->query("UPDATE tbl_barang SET stok = stok - $jumlah WHERE id_barang='$id_barang'");
@@ -39,7 +39,8 @@ if (isset($_POST['simpan'])) {
 
 			// tampilkan pesan jika berhasil
 			echo "<script>alert('Tansaksi berhasil disimpan !')</script>";
-			echo "<script>location='transaksi.php'</script>";
+			echo "<script>window.open('nota.php?trx=" . $kd_transaksi . "','popup','width=600,height=600')</script>";
+			// echo "<script>location='transaksi.php'</script>";
 		} else {
 			echo "<script>alert('Tansaksi gagal disimpan !')</script>";
 			echo "<script>location='transaksi.php'</script>";
@@ -203,7 +204,8 @@ if (isset($_POST['simpan'])) {
 				<div class="row">
 					<div class="col-6">
 						<button type="submit" class="btn btn-lg btn-block btn-success mt-4" name="simpan">Simpan</button>
-						<a href="transaksi_batal.php" class="btn btn-block btn-lg btn-danger">Batal</a></button>
+						<a href="transaksi_batal.php" onclick="return confirm('Apakah anda yakin akan membatalkan transaksi ?')" class="btn btn-block btn-lg btn-danger">Batal</a></button>
+						<!-- <a href="transaksi_batal.php" target="popup" onclick="window.open('http://kanishkkunal.com','popup','width=600,height=600'); return false;" class="btn btn-block btn-lg btn-warning">Batal</a></button> -->
 
 					</div>
 					<div class="col-6">
